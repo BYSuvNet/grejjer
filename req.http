@@ -1,0 +1,9 @@
+GET http://localhost:5019/api/items/1
+
+###
+
+GET http://localhost:5019/api/requests
+
+###
+
+POST http://localhost:5019/api/requests/1/accept

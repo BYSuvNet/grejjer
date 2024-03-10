@@ -1,0 +1,42 @@
+﻿@page "/"
+@inject BorrowService _borrowService
+
+<PageTitle>Home</PageTitle>
+
+<h1>Grejjer</h1>
+
+<table class="table">
+    <tr>
+        <th>Grej</th>
+        <th>Kan du låna?</th>
+    </tr>
+    @if (items != null)
+    {
+        @foreach (var item in items)
+        {
+            <tr>
+                <td><a href="items/@item.Key.Id">@item.Key.Name</a></td>
+                <td>
+                    @if (item.Value)
+                    {
+                        <span class="text-success">Ja</span>
+                    }
+                    else
+                    {
+                        <span class="text-danger">Nej</span>
+                    }
+                </td>
+            </tr>
+        }
+    }
+</table>
+
+@code
+{
+    private Dictionary<Item, bool>? items = null;
+
+    protected override async Task OnInitializedAsync()
+    {
+        items = await _borrowService.GetAllItemsWithStatus();
+    }
+}

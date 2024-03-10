@@ -1,0 +1,62 @@
+@page "/items/{id:int}"
+@inject BorrowService borrowService
+@inject NavigationManager navigationManager
+@rendermode InteractiveServer
+
+<h3>@item.Name</h3>
+@if (itemAvailability)
+{
+    <p>Denna grej går bra att låna!</p>
+}
+else
+{
+    <p>Denna grej är tyvärr inte tillgängligt att låna just nu :(</p>
+}
+
+<p>@item.Description</p>
+
+<div class="input-group mb-3">
+    <div class="input-group-append">
+        <input @bind="name" type="text" class="form-control" placeholder="Ditt namn här" aria-label="Låna"
+            aria-describedby="basic-addon2">
+        <button class="btn btn-outline-secondary" type="button" @onclick="RequestItem">Låna</button>
+    </div>
+</div>
+
+@if (request != null)
+{
+    @if (request.Status == RequestStatus.Rejected)
+    {
+        <p>Det gick inte att skicka förfrågan! Antingen har du redan skickat en förfrågan,
+            eller så går det inte att köa på denna grej just nu.
+        </p>
+    }
+    else
+    {
+        <p>Förfrågan skickad. Jag hör av mig så snart som möligt!</p>
+    }
+}
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+
+    private Item? item;
+    private bool itemAvailability;
+
+    private string name = "";
+
+    BorrowRequest? request;
+
+    protected override async Task OnInitializedAsync()
+    {
+        item = await borrowService.GetItemByIdAsync(Id);
+        itemAvailability = await borrowService.IsItemAvailableAsync(Id);
+    }
+
+    private async Task RequestItem()
+    {
+        request = await borrowService.CreateBorrowRequestAsync(name, Id);
+        name = "";
+    }
+}
