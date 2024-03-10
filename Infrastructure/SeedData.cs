@@ -1,15 +1,15 @@
 using Microsoft.EntityFrameworkCore;
-using Grejzor.Core;
+using Grejjer.Core;
 
-namespace Grejzor.Infrastructure;
+namespace Grejjer.Infrastructure;
 
 public static class SeedData
 {
     public static void Initialize(IServiceProvider serviceProvider)
     {
-        using (var context = new GrejzorDbContext(
+        using (var context = new GrejjerDbContext(
             serviceProvider.GetRequiredService<
-                DbContextOptions<GrejzorDbContext>>()))
+                DbContextOptions<GrejjerDbContext>>()))
         {
             context.Items.AddRange(
                 new Item

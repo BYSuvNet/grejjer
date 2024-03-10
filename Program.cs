@@ -1,13 +1,13 @@
 using Grejjer.Components;
-using Grejzor.Infrastructure;
-using Grejzor.Core;
+using Grejjer.Infrastructure;
+using Grejjer.Core;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorComponents().AddInteractiveServerComponents();
-builder.Services.AddDbContext<GrejzorDbContext>(options => options.UseInMemoryDatabase("GrejzorDb"));
+builder.Services.AddDbContext<GrejjerDbContext>(options => options.UseInMemoryDatabase("GrejjerDb"));
 builder.Services.AddScoped<BorrowService>();
 
 var app = builder.Build();
@@ -26,7 +26,7 @@ app.UseAntiforgery();
 app.MapRazorComponents<App>().AddInteractiveServerRenderMode();
 
 app.MapGet("/api/items/{id:int}", async (BorrowService borrowService, int id) => await borrowService.GetItemByIdAsync(id));
-app.MapGet("/api/requests", async (GrejzorDbContext db) => await db.BorrowRequests.ToListAsync());
+app.MapGet("/api/requests", async (GrejjerDbContext db) => await db.BorrowRequests.ToListAsync());
 app.MapPost("/api/requests/{id:int}/accept", async (BorrowService borrowService, int id) => await borrowService.AcceptRequestAsync(id));
 
 app.Run();

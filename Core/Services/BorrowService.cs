@@ -1,13 +1,13 @@
 using Microsoft.EntityFrameworkCore;
-using Grejzor.Infrastructure;
+using Grejjer.Infrastructure;
 
-namespace Grejzor.Core;
+namespace Grejjer.Core;
 
 public class BorrowService
 {
-    private readonly GrejzorDbContext _dbContext;
+    private readonly GrejjerDbContext _dbContext;
 
-    public BorrowService(GrejzorDbContext _dbContext)
+    public BorrowService(GrejjerDbContext _dbContext)
     {
         this._dbContext = _dbContext;
     }

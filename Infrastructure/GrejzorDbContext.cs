@@ -1,11 +1,11 @@
 using Microsoft.EntityFrameworkCore;
-using Grejzor.Core;
+using Grejjer.Core;
 
-namespace Grejzor.Infrastructure;
+namespace Grejjer.Infrastructure;
 
-public class GrejzorDbContext : DbContext
+public class GrejjerDbContext : DbContext
 {
-    public GrejzorDbContext(DbContextOptions<GrejzorDbContext> options) : base(options) { }
+    public GrejjerDbContext(DbContextOptions<GrejjerDbContext> options) : base(options) { }
 
     public DbSet<Item> Items { get; set; }
     public DbSet<BorrowRequest> BorrowRequests { get; set; }

@@ -1,4 +1,4 @@
-namespace Grejzor.Core;
+namespace Grejjer.Core;
 
 public class Item
 {
